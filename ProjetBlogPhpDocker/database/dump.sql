@@ -15,3 +15,12 @@ CREATE TABLE IF NOT EXISTS Post
     author  int NOT NULL
 );
 
+CREATE TABLE if not EXISTS `comments`(
+    `comment_id` INT NOT NULL auto_increment,
+    `username` VARCHAR(255),
+    `id` INT,
+    `created` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `content` TEXT,
+    PRIMARY KEY (`comment_id`)
+);
+
