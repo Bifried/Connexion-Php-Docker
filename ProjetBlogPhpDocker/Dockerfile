@@ -1,21 +1,9 @@
-FROM php:8.1.2-apache
+# Setup and build the client
 
-#ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-#RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-#RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+FROM node:9.4.0-alpine as client
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql \
-    && a2enmod rewrite
-
-RUN curl -sS https://getcomposer.org/installer | php -- \
-        &&  mv composer.phar /usr/local/bin/composer
-
-RUN apt-get update -y \
-    && apt-get install libyaml-dev -y \
-    && pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
-
-
-
-#RUN apt-get update -y
-#RUN apt-get install libyaml-dev -y
-#RUN pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
+WORKDIR /usr/app/client/
+COPY client/package*.json ./
+RUN npm install -qy
+COPY client/ ./
+RUN npm run build

@@ -1,0 +1,50 @@
+version: '2'
+
+services:
+
+  client:
+    # build:
+    #   context: ./client/
+    # command: npm start
+    # volumes:
+    #   - ./client/:/usr/app
+    #   - /usr/app/node_modules
+    # ports:
+    #   - "3000:3000"
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - ./client/:/usr/app
+      - ./client:/app
+    ports:
+      - "3000:3000"
+    command: npm start
+
+  php:
+    build:
+      context: ./server/
+      dockerfile: Dockerfile
+    ports:
+      - 8000:80
+    volumes:
+      - ./server:/var/www/html
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: react-app
+    volumes: 
+      - ./server/database/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - 8080:80
