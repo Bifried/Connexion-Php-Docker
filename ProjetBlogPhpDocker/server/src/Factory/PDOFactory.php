@@ -11,7 +11,7 @@ class PDOFactory implements Database
     private string $userName;
     private string $password;
 
-    public function __construct(string $host = "db", string $dbName = "data", string $userName = "root", string $password = "password")
+    public function __construct(string $host = "db", string $dbName = "react-app", string $userName = "root", string $password = "root")
     {
         $this->host = $host;
         $this->dbName = $dbName;

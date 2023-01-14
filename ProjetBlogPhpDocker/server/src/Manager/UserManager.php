@@ -12,12 +12,18 @@ class UserManager extends BaseManager
      */
     public function getAllUsers(): array
     {
-        $query = $this->pdo->query("select * from User");
-
-        $users = [];
-
-        while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
-            $users[] = new User($data);
+        $sql = "SELECT * FROM users";
+        $path = explode('/', $_SERVER['REQUEST_URI']);
+        if (isset($path[3]) && is_numeric($path[3])) {
+            $sql .= " WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':id', $path[3]);
+            $stmt->execute();
+            $users = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $users = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
         return $users;
