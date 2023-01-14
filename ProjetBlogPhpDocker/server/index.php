@@ -6,7 +6,9 @@ header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
 require_once "vendor/autoload.php";
-
+include 'dbConnect.php';
+$objDb = new DbConnect;
+$conn = $objDb->connect();
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case "GET":
@@ -15,7 +17,7 @@ switch ($method) {
         echo json_encode($conn,true);
         break;
 
-        /*
+
     case "POST":
         // Lire les datas en json
         $user = json_decode(file_get_contents('php://input'));
@@ -48,5 +50,5 @@ switch ($method) {
         }
         echo json_encode($response);
         break;
-        */
+
 }
