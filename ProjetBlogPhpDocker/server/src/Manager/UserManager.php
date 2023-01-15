@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\User;
+use App\Route\Route;
 
 class UserManager extends BaseManager
 {
@@ -10,6 +11,7 @@ class UserManager extends BaseManager
     /**
      * @return User[]
      */
+
     public function getAllUsers(): array
     {
         $sql = "SELECT * FROM users";

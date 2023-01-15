@@ -7,10 +7,12 @@ use App\Factory\PDOFactory;
 use App\Manager\UserManager;
 use App\Route\Route;
 
+
 class SecurityController extends AbstractController
 {
     // ICI, METHOD POST, donc une sorte de création, pas un render d'une page
     // Accéder à la page marche avec GET
+    /*
     #[Route('/logged', name: "logged", methods: ["POST"])]
     public function logged()
     {
@@ -33,12 +35,10 @@ class SecurityController extends AbstractController
         exit;
     }
 
-
-
     #[Route('/logged-success', name: "user-logged", methods: ["GET"])]
     public function loggedUser()
     {
-        $this->render("/showUsers.php", ["titre" => "Nappy",
+        $this->render("/uusers.php", ["titre" => "Nappy",
             "content" => 'Amusez vous et partagez ensemble toutes vos aventures !😊'], "Page utilisateur");
     }
 
@@ -46,11 +46,26 @@ class SecurityController extends AbstractController
     public function registerPage()
     {
         $this->render("/register.php", [], "Créer un compte");
+    }*/
+
+    #[Route('/users', name: "register", methods: ["GET"])]
+    public function showUsers()
+    {
+        $this->render("/users.php", [], "Créer un compte");
     }
 
-    #[Route('/register-new-user', name: "register", methods: ["POST"])]
+    #[Route('/', name: "everything", methods: ["GET"])]
+    public function showEverything()
+    {
+        $this->render("/users.php", [], "Créer un compte");
+    }
+
+
+    #[Route('/', name: "everything", methods: ["GET"])]
     public function registerNewUser()
     {
+
+        $_POST = json_decode(file_get_contents('php://input'));
         $username = $_POST['username'];
         $password = $_POST["password"];
         $firstname= $_POST['firstname'];
@@ -64,7 +79,7 @@ class SecurityController extends AbstractController
         $newUser->setPassword(md5($password));
         $newUser->setEmail($email);
         $userManager->insertUser($newUser);
-        header('Location: /login');
+        //header('Location: /login');*/
 
     }
 }

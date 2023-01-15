@@ -10,7 +10,7 @@ use App\Route\Route;
 class PostController extends AbstractController
 {
     // Prend la route, lui donne un nom et attribue une méthode
-    #[Route('/', name: "homepage", methods: ["GET"])]
+    #[Route('/rere', name: "homepage", methods: ["GET"])]
     public function home()
     {
         $manger = new PostManager(new PDOFactory());

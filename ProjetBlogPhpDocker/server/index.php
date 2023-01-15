@@ -1,21 +1,19 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-require_once "vendor/autoload.php";
+use App\Route\Route;
 
+require_once 'vendor/autoload.php';
+
+/*********************************/
+
+include 'dbConnect.php';
+$objDb = new DbConnect;
+$conn = $objDb->connect();
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
-    case "GET":
-        $objDb = new \App\Manager\UserManager(new \App\Factory\PDOFactory());
-        $conn = $objDb->getAllUsers();
-        echo json_encode($conn,true);
-        break;
-
-        /*
     case "POST":
         // Lire les datas en json
         $user = json_decode(file_get_contents('php://input'));
@@ -33,20 +31,53 @@ switch ($method) {
         }
         echo json_encode($response);
         break;
-
-    case "DELETE":
-        $sql = "DELETE FROM users WHERE id = :id";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[3]);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Record deleted successfully.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Failed to delete record.'];
-        }
-        echo json_encode($response);
-        break;
-        */
 }
+
+/*********************************/
+
+$controllerDir = dirname(__FILE__) . '/src/Controller';
+$dirs = scandir($controllerDir);
+$controllers = [];
+
+foreach ($dirs as $dir) {
+    if ($dir === "." || $dir === "..") {
+        continue;
+    }
+    $controllers[] = "App\\Controller\\" . pathinfo($controllerDir . DIRECTORY_SEPARATOR . $dir)['filename'];
+}
+
+$routesObj = [];
+
+foreach ($controllers as $controller) {
+    $reflection = new ReflectionClass($controller);
+    foreach ($reflection->getMethods() as $method) {
+        foreach ($method->getAttributes() as $attribute) {
+            /** @var Route $route */
+            $route = $attribute->newInstance();
+            $route->setController($controller)
+                ->setAction($method->getName());
+
+            $routesObj[] = $route;
+        }
+    }
+}
+
+$url = "/" . trim(explode("?", $_SERVER['REQUEST_URI'])[0], "/");
+
+foreach ($routesObj as $route) {
+
+    if (!$route->match($url) || !in_array($_SERVER['REQUEST_METHOD'], $route->getMethods())) {
+        continue;
+    }
+
+    $controlerClassName = $route->getController();
+    $action = $route->getAction();
+    $params = $route->mergeParams($url);
+
+    new $controlerClassName($action, $params);
+    exit();
+}
+
+echo "NO MATCH TEST";
+
+die;
