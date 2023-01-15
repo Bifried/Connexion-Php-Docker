@@ -9,6 +9,7 @@ class PostManager extends BaseManager
     /**
      * @return Post[]
      */
+
     public function getAllPosts(): array
     {
         $query = $this->pdo->query("select * from Post");

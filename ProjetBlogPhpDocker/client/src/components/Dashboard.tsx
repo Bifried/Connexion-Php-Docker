@@ -1,11 +1,10 @@
-// import { useState } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import Resume from "./Resume"
 
 export default function Dashboard() {
     return (
         <div>
             <h1>Dashboard</h1>
+            <Resume />
         </div>
     )
 }

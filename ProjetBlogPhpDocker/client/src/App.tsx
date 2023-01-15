@@ -7,21 +7,20 @@ import Dashboard from './components/Dashboard';
 function App() {
   return (
     <div className="App">
-      <h5>React CRUD operations using PHP API and MySQL</h5>
+      <h5>Coloc</h5>
 
       <BrowserRouter>
         <nav>
           <ul>
             <li>
-              <Link to="/">List Users</Link>
-            </li>
-            <li>
-              <Link to="user/register">Create User</Link>
+              <Link to="user/register">S'inscrire</Link>
+              <br></br>
+              <Link to="user/login"> Connexion</Link>
             </li>
           </ul>
         </nav>
         <Routes>
-          <Route index element={<Login />} />
+          <Route path="user/login" element={<Login />} />
           <Route path="user/register" element={<Register />} />
           <Route path="user/dashboard" element={<Dashboard />} />
         </Routes>

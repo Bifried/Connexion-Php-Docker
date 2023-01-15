@@ -9,8 +9,9 @@ use App\Route\Route;
 
 class PostController extends AbstractController
 {
+    /*
     // Prend la route, lui donne un nom et attribue une méthode
-    #[Route('/', name: "homepage", methods: ["GET"])]
+    #[Route('/rere', name: "homepage", methods: ["GET"])]
     public function home()
     {
         $manger = new PostManager(new PDOFactory());
@@ -32,11 +33,11 @@ class PostController extends AbstractController
      */
     // Pour passer des params en URL et les afficher dans la page.
     // Sert à chercher un poste en particulier avec les arguments qu'on met dans l'URL
-
+/*
     #[Route('/login', name: "login", methods: ["GET", "POST"])]
     public function login()
     {
         $this->render("login.php", [], "Connexion");
-    }
+    }*/
 }
 
