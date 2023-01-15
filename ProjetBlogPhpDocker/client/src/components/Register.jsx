@@ -24,10 +24,10 @@ export default function Register() {
         <div>
             <h1>Inscription</h1>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="firstname" onChange={handleChange} />  
-                <input type="text" name="lastname" onChange={handleChange} /> 
-                <input type="text" name="email" onChange={handleChange} />
-                <input type="text" name="password" onChange={handleChange} />   
+                <input type="text" name="firstname" placeholder="firstname" onChange={handleChange} />
+                <input type="text" name="lastname" placeholder="name" onChange={handleChange} />
+                <input type="text" name="email" placeholder="email" onChange={handleChange} />
+                <input type="text" name="password" placeholder="password" onChange={handleChange} />
                 <button>S'inscrire</button>          
             </form>
         </div>

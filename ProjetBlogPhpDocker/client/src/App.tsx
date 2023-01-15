@@ -14,11 +14,13 @@ function App() {
           <ul>
             <li>
               <Link to="user/register">S'inscrire</Link>
+              <br></br>
+              <Link to="user/login"> Connexion</Link>
             </li>
           </ul>
         </nav>
         <Routes>
-          <Route index element={<Login />} />
+          <Route path="user/login" element={<Login />} />
           <Route path="user/register" element={<Register />} />
           <Route path="user/dashboard" element={<Dashboard />} />
         </Routes>
