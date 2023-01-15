@@ -61,6 +61,7 @@ class SecurityController extends AbstractController
     }
 
 
+/*
     #[Route('/', name: "everything", methods: ["GET"])]
     public function registerNewUser()
     {
@@ -79,7 +80,8 @@ class SecurityController extends AbstractController
         $newUser->setPassword(md5($password));
         $newUser->setEmail($email);
         $userManager->insertUser($newUser);
-        //header('Location: /login');*/
+        //header('Location: /login');
 
-    }
+    }*/
+
 }
