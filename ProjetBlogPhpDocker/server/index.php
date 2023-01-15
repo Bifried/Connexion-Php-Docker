@@ -14,24 +14,24 @@ $objDb = new DbConnect;
 $conn = $objDb->connect();
 $method = $_SERVER['REQUEST_METHOD'];
 if($method == "POST") {
-        // Lire les datas en json
-        $user = json_decode(file_get_contents('php://input'));
-        $sql = "INSERT INTO users(firstname, lastname, email, password) VALUES(:firstname, :lastname, :email, :password)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':firstname', $user->firstname);
-        $firstName = (filter_input(INPUT_POST,"$user->firstname",FILTER_SANITIZE_SPECIAL_CHARS));
-        $stmt->bindParam(':lastname', $user->lastname);
-        $lastName = (filter_input(INPUT_POST,"$user->lastname",FILTER_SANITIZE_SPECIAL_CHARS));
-        $stmt->bindParam(':email', $user->email);
-        $email = (filter_input(INPUT_POST,"$user->email",FILTER_SANITIZE_SPECIAL_CHARS));
-        $stmt->bindParam(':password', $user->password);
+    // Lire les datas en json
+    $user = json_decode(file_get_contents('php://input'));
+    $sql = "INSERT INTO users(firstname, lastname, email, password) VALUES(:firstname, :lastname, :email, :password)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':firstname', $user->firstname);
+    $firstName = (filter_input(INPUT_POST,"$user->firstname",FILTER_SANITIZE_SPECIAL_CHARS));
+    $stmt->bindParam(':lastname', $user->lastname);
+    $lastName = (filter_input(INPUT_POST,"$user->lastname",FILTER_SANITIZE_SPECIAL_CHARS));
+    $stmt->bindParam(':email', $user->email);
+    $email = (filter_input(INPUT_POST,"$user->email",FILTER_SANITIZE_SPECIAL_CHARS));
+    $stmt->bindParam(':password', $user->password);
 
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Record created successfully.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Failed to create record.'];
-        }
-        echo json_encode($response);
+    if ($stmt->execute()) {
+        $response = ['status' => 1, 'message' => 'Record created successfully.'];
+    } else {
+        $response = ['status' => 0, 'message' => 'Failed to create record.'];
+    }
+    echo json_encode($response);
 }
 
 /*********************************/
